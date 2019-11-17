@@ -1,0 +1,42 @@
+<h2>{{tiered_free_items_title}}</h2>
+<ul>
+    {{#tiered_free_items}}
+    <li data-item-id="{{id}}" class="{{#if unlocked }}ucd-unlocked-offer{{else}}ucd-locked-offer{{/if}}">
+        <form action="/cart/add" method="post">
+            <a href="{{url}}" class="upsell-image">
+                <img src="{{img}}" alt=""/>
+            </a>
+            <div>
+                <div class="ucd-upsell-info">
+                    <div>
+                        <a href="{{url}}" class="upsell-title">{{title}}</a>
+                        <select name="id" class="{{#eq available_variants_count 1}}is-hidden{{/eq}}">
+                            {{#each variants}}
+                            {{#if this.available}}
+                            <option value="{{this.id}}" data-price="{{this.price}}" data-compare-at-price="{{this.compare_at_price}}" data-img="{{this.img}}">
+                                {{this.title}}
+                            </option>
+                            {{/if}}
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="ucd-price-container">
+                        <span>{{{price}}}</span>
+                        <input type="hidden" name="properties[_ucd]" value="Tiered Free Items"/>
+                        <button type="submit" class="upsell-submit">Add</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        {{#if locked }}
+        <div class="ucd-locked-offer-progress">
+            <p>Unlock at {{{unlock_price}}}</p>
+            <div class="ucd-locked-offer-progress-bar">
+                <div class="ucd-locked-offer-progress-made" style="width: {{progress}}%;"></div>
+            </div>
+        </div>
+        {{/if}}
+    </li>
+    {{/tiered_free_items}}
+</ul>

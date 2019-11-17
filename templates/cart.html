@@ -1,0 +1,112 @@
+<form action="/cart" method="post" novalidate class="ucdcart" id="ucd-checkout-form">
+    {{special_offer_notification}}
+
+    {{#if special_offer_notification_progress}}
+    <div class="sellify-shipping-progress">
+        <div class="ucd-locked-offer-progress-bar">
+            <div class="ucd-locked-offer-progress-made" style="width: {{special_offer_notification_progress}}%;"
+                 data-progress="{{special_offer_notification_progress}}"></div>
+            <span class="sellify-progress-indicator">0%</span>
+            <span class="sellify-progress-indicator">25%</span>
+            <span class="sellify-progress-indicator">50%</span>
+            <span class="sellify-progress-indicator">75%</span>
+            <span class="sellify-progress-indicator">100%</span>
+        </div>
+    </div>
+    {{/if}}
+
+    <div class="ucdcart__inner">
+        {{#items}}
+        <div class="ucdcart__product">
+            <div class="ucdcart__row" data-line="{{line}}" data-key="{{key}}">
+                <div class="ucd-grid">
+                    <div class="ucd-grid__item">
+                        <a href="{{url}}" class="ucdcart__product-image"><img src="{{img}}" alt=""></a>
+                    </div>
+                    <div class="ucd-grid__item">
+                        <div class="ucd-quantity-grid">
+                            <div>
+                                <p>
+                                    <a href="{{url}}" class="ucdcart__product-name">{{name}}</a>
+                                    {{#if variation}}
+                                    <span class="ucdcart__product-meta">{{variation}}</span>
+                                    {{/if}}
+                                    {{#properties}}
+                                    {{#each this}}
+                                    {{#if this}}
+                                    <span class="ucdcart__product-meta" data-key="{{@key}}">{{@key}}: {{this}}</span>
+                                    {{/if}}
+                                    {{/each}}
+                                    {{/properties}}
+
+                                </p>
+                                <div class="ucd-price-container">
+                                    {{#if discountsApplied}}
+                                    <small class="ucdcart-item__price-strikethrough"><s>{{{originalPrice}}}</s></small>
+                                    <br><span>{{{linePrice}}}</span>
+                                    {{else}}
+                                    <span>{{{linePrice}}}</span>
+                                    {{/if}}
+                                </div>
+                                {{#if discountsApplied}}
+                                <div class="grid--full display-table">
+                                    <div class="grid__item text-right">
+                                        {{#each discounts}}
+                                        <small class="ucdcart-item__discount">{{{ this.title }}}</small>
+                                        <br>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                                {{/if}}
+                                <a href="javascript:void(0);" data-line="{{line}}" data-key="{{key}}" class="ucd-remove">Remove</a>
+                            </div>
+                            <div class="ucd-quantity-container">
+                                <div class="ucdcart__qty">
+                                    <button type="button" class="ucdcart__qty-adjust ucdcart__qty--minus icon-fallback-text" data-id="{{id}}"
+                                            data-qty="{{itemMinus}}" data-line="{{line}}" data-key="{{key}}">
+                                        <span class="icon icon-minus" aria-hidden="true"> </span>
+                                        <span class="">&minus;</span>
+                                    </button>
+                                    <input type="text" name="updates[]" class="ucdcart__qty-num" value="{{itemQty}}" min="0" data-id="{{id}}"
+                                           data-line="{{line}}" data-key="{{key}}" aria-label="quantity" pattern="[0-9]*">
+                                    <button type="button" class="ucdcart__qty-adjust ucdcart__qty--plus icon-fallback-text" data-id="{{id}}"
+                                            data-line="{{line}}" data-key="{{key}}" data-qty="{{itemAdd}}">
+                                        <span class="icon icon-plus" aria-hidden="true"> </span>
+                                        <span class="">+</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/items}}
+    </div>
+</form>
+
+
+<div class="ucdcart__footer">
+    <div class="grid--full subtotal-grid">
+        <div class="grid__item two-thirds">
+            <p>Subtotal</p>
+        </div>
+        <div class="grid__item one-third text-right">
+            <p>{{{totalPrice}}}</p>
+            {{#if totalCartDiscount}}
+            <p class="ucdcart__savings text-center"><em>{{{totalCartDiscount}}}</em></p>
+            {{/if}}
+        </div>
+    </div>
+
+    {{upsells}}
+    {{recommended_products}}
+
+    <div class="special-instructions">
+        <label for="CartSpecialInstructions">Special instructions for seller</label>
+        <textarea name="note" class="input-full" id="CartSpecialInstructions" form="ucd-checkout-form">{{ note }}</textarea>
+    </div>
+</div>
+<button type="submit" class="btn--secondary btn--full cart__checkout" name="checkout" form="ucd-checkout-form">
+    Checkout
+</button>

@@ -1,0 +1,44 @@
+<h2>{{upsells_title}}</h2>
+<ul>
+    {{#upsells}}
+    <li data-upsell-id="{{id}}">
+        <form action="/cart/add" method="post">
+            <a href="{{url}}" class="upsell-image ucd-item-image"><img src="{{img}}" alt=""></a>
+            <div>
+                <div class="ucd-upsell-info">
+                    <div>
+                        <a href="{{url}}" class="upsell-title">{{title}}</a>
+                        <select name="id" class="{{#eq available_variants_count 1}}is-hidden{{/eq}}">
+                            {{#each variants}}
+                            {{#if this.available}}
+                            <option value="{{this.id}}" data-price="{{this.price}}" data-compare-at-price="{{this.compare_at_price}}" data-img="{{this.img}}">
+                                {{this.title}}
+                            </option>
+                            {{/if}}
+                            {{/each}}
+                        </select>
+                        <div class="ucd-price-container">
+                            <span>{{{price}}}</span>
+                        </div>
+                    </div>
+                    <div class="ucd-quantity-container">
+                        <div class="ucdcart__qty">
+                            <button type="button" class="ucdcart__qty-adjust ucdcart__qty--minus icon-fallback-text">
+                                <span class="icon icon-minus" aria-hidden="true"> </span>
+                                <span class="">−</span>
+                            </button>
+                            <input type="text" name="quantity" class="ucdcart__qty-num" value="1" min="1" aria-label="quantity" pattern="[0-9]*">
+                            <button type="button" class="ucdcart__qty-adjust ucdcart__qty--plus icon-fallback-text">
+                                <span class="icon icon-plus" aria-hidden="true"></span>
+                                <span class="">+</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="properties[_ucd]" value="Upsells"/>
+                <button type="submit" class="upsell-submit">Add</button>
+            </div>
+        </form>
+    </li>
+    {{/upsells}}
+</ul>
