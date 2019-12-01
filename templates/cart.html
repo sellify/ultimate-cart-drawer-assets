@@ -87,15 +87,39 @@
 
 
 <div class="ucdcart__footer">
+
+    {{template_discount_code_field}}
+
+    {{#ne original_total_price_formatted total_price_formatted}}
     <div class="grid--full subtotal-grid">
         <div class="grid__item two-thirds">
             <p>Subtotal</p>
         </div>
         <div class="grid__item one-third text-right">
-            <p>{{{totalPrice}}}</p>
-            {{#if totalCartDiscount}}
-            <p class="ucdcart__savings text-center"><em>{{{totalCartDiscount}}}</em></p>
-            {{/if}}
+            <p>{{{original_total_price_formatted}}}</p>
+        </div>
+    </div>
+    {{/ne}}
+
+    {{#if total_discount_formatted}}
+    <div class="grid--full subtotal-grid">
+        <div class="grid__item two-thirds">
+            <p>Discount</p>
+        </div>
+        <div class="grid__item one-third text-right">
+            <p>-{{{total_discount_formatted}}}</p>
+        </div>
+    </div>
+    {{/if}}
+
+    {{template_discount_code_details}}
+
+    <div class="grid--full subtotal-grid">
+        <div class="grid__item two-thirds">
+            <p>Total</p>
+        </div>
+        <div class="grid__item one-third text-right">
+            <p>{{{total_price_formatted}}}</p>
         </div>
     </div>
 
